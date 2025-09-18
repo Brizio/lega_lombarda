@@ -31,7 +31,7 @@
 
 <script>
 import { ref } from 'vue';
-import Card from './card.vue';
+import Card from './Card.vue';
 import cardsData from '../data/cards.js';
 
 export default {
