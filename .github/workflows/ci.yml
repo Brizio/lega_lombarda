@@ -1,0 +1,60 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [TotalRecreation, main]
+  pull_request:
+    branches: [TotalRecreation, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck game-engine
+        run: npm run typecheck --workspace=packages/game-engine
+
+      - name: Test game-engine
+        run: npm test --workspace=packages/game-engine
+
+      - name: Typecheck server
+        run: npm run typecheck --workspace=apps/server
+
+      - name: Typecheck web
+        run: npm run build --workspace=apps/web
+
+  docker:
+    needs: test
+    if: github.ref == 'refs/heads/TotalRecreation' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build & push server
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/server/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/barbarossa-server:latest
+
+      - name: Build & push web
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/web/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/barbarossa-web:latest

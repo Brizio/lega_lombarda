@@ -1,0 +1,39 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: barbarossa
+    volumes:
+      - mongo-data:/data/db
+      - ./docker/mongo-init:/docker-entrypoint-initdb.d:ro
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/barbarossa
+      - JWT_SECRET=dev-jwt-secret-change-in-production
+      - SESSION_SECRET=dev-session-secret-change-in-production
+    volumes:
+      - ./packages/game-engine/src:/app/packages/game-engine/src:ro
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - '5173:80'
+    depends_on:
+      - server
+
+volumes:
+  mongo-data:

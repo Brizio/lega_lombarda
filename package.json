@@ -1,0 +1,31 @@
+{
+  "name": "barbarossa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:server & npm run dev:web",
+    "dev:server": "npm -w apps/server run dev",
+    "dev:web": "npm -w apps/web run dev",
+    "build": "npm -w packages/game-engine run build && npm -w apps/server run build && npm -w apps/web run build",
+    "build:engine": "npm -w packages/game-engine run build",
+    "build:server": "npm -w apps/server run build",
+    "build:web": "npm -w apps/web run build",
+    "test": "npm -w packages/game-engine run test && npm -w apps/server run test",
+    "test:engine": "npm -w packages/game-engine run test",
+    "test:server": "npm -w apps/server run test",
+    "typecheck": "npm -w packages/game-engine run typecheck && npm -w apps/server run typecheck && npm -w apps/web run typecheck",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.5.0"
+  }
+}

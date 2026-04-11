@@ -1,0 +1,12 @@
+node_modules
+dist
+_archive
+Lega_Lombarda
+.git
+.github
+.vscode
+Journal
+coverage
+*.log
+.env
+.env.*

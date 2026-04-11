@@ -1,0 +1,24 @@
+
+2025-09-27 
+📝 RESOCONTO PER DOMANI
+✅ COSA ABBIAMO FATTO
+Identificato il problema: Mismatch tra dati frontend (name, password, isPrivate) e validazione backend (maxPlayers mancante)
+Risolto la validazione: Aggiunto schema Joi completo con supporto per name e maxPlayers
+Aggiornato il modello: Game class ora supporta il nome partita
+Semplificato per 2 giocatori: GameController ora accetta solo 2 giocatori (come richiesto dal gioco)
+🚧 STATO ATTUALE
+Backend: ✅ Validazione corretta, supporto nome partita
+Frontend: ✅ Invia i dati giusti al backend
+Problema: Ancora errore HTTP 400, potrebbe essere un problema di comunicazione o altro campo mancante
+🔍 METODO DI DEBUG PER DOMANI
+Approccio incrementale: Testare ogni singolo componente
+Logging dettagliato: Aggiungere console.log per vedere esattamente cosa arriva al backend
+Test API diretti: Usare Postman/curl per testare l'endpoint senza frontend
+Validazione step-by-step: Verificare ogni campo della richiesta
+🎯 PRIORITÀ DOMANI
+5 min: Controllare log server per vedere i dati ricevuti
+10 min: Confrontare dati inviati vs schema Joi
+15 min: Test diretto API con curl
+20 min: Prima partita funzionante
+Il problema è quasi risolto - siamo vicinissimi! Domani con un approccio più sistematico completiamo in 30-45 minuti.
+
